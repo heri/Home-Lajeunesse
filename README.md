@@ -1,5 +1,7 @@
 # Connected-Lajeunesse
 
+View github, weather, calendar and home notifications on an Android Tablet. With speech recognition control and twitter sentiment analysis
+
 ## Environment Configuration
 `env.js` project root
 ```json

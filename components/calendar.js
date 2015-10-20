@@ -1,4 +1,5 @@
 'use strict';
+
 var React = require('react-native'),
     Styles = require('../styles.js'),
     TweenState = require('react-tween-state'),
@@ -11,24 +12,25 @@ var {
   Image
 } = React;
 
-function getGithubNotifications () {
-  return fetch('https://api.github.com/notifications?access_token=')
+function getGCalendar(calendar_id) {
+  today = (new Date()).toISOString();
+  return fetch('https://www.googleapis.com/calendar/v3/calendars/' + calendar_id +'/events?fields=items(summary,id,location,start)&key=')
   .then(function (response) {
-    return response.json();
+    return response.body.items;
   });
 }
 
-var GithubView = React.createClass({
+var CalendarView = React.createClass({
   mixins: [TweenState.Mixin],
   getInitialState: function () {
-    return {notifications: [], notification: 0};
+    return {calendars: [], calendar: 0};
   },
   rotate: function () {
-    var next = this.state.notification + 1;
-    if (next === this.state.notifications.length) {
+    var next = this.state.calendar + 1;
+    if (next === this.state.calendars.length) {
       next = 0;
     }
-    this.state.notification = next;
+    this.state.calendar = next;
     this.setState(this.state);
     this.fade(1);
   },
@@ -46,39 +48,38 @@ var GithubView = React.createClass({
         }
       }.bind(this)
     });
-
   },
   componentDidMount: function () {
-    getGithubNotifications().then(function (notifications) {
-      this.setState({notifications: notifications, notification: 0});
+    getGCalendar(this.props.calendar_id).then(function (calendars) {
+      this.setState({calendars: calendars, calendar: 0});
       this.fade(1);
     }.bind(this));
   },
   render: function () {
-    var notification = this.state.notifications[this.state.notification],
-        notificationView;
-        if (notification) {
-          notificationView = (
-            <View style={[styles.notification, {opacity: this.getTweeningValue('opacity')}]} key={'notification' + notification.id}>
-            <Text style={styles.text}>{notification.repository.name}: {notification.subject.title}</Text>
-            </View>
-          );
-        } else {
-          notificationView = (<View></View>);
-        }
+    var calendar = this.state.calendars[this.state.calendar],
+        calendarView;
 
+    if (calendar) {
+      calendarView = (
+        <View style={[styles.calendar, {opacity: this.getTweeningValue('opacity')}]} key={'calendar' + calendar.id}>
+          <Text style={styles.text}>{calendar.summary}</Text>
+          <Text style={styles.text}>{calendar.start.dateTime}</Text>
+        </View>
+      );
+    } else {
+      calendarView = (<View></View>);
+    }
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <Text style={styles.title}>Github</Text>
-          <Image source={require('image!github')} style={styles.image} />
+          <Text style={styles.title}>Calendar</Text>
+          <Image source={require('image!calendar')} style={styles.image} />
         </View>
-        {notificationView}
+        {calendarView}
       </View>
     );
   }
 });
-
 
 var styles = StyleSheet.create({
   container: {
@@ -98,15 +99,14 @@ var styles = StyleSheet.create({
     color: '#fff',
     fontSize: Styles.fontSize.medium
   },
+  calendar: {
+    opacity: 0
+  },
   text: {
     color: '#fff',
     fontSize: Styles.fontSize.small,
     textAlign: 'right'
-  },
-  notification: {
-    opacity: 0
   }
 });
 
-
-module.exports = GithubView;
+module.exports = CalendarView;
