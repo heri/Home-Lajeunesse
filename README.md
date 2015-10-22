@@ -2,6 +2,9 @@
 
 View github, weather, calendar and home notifications on an Android Tablet. With speech recognition control and twitter sentiment analysis
 
+![screenshot lajeunesse](https://github.com/heri/Connected-Lajeunesse/blob/master/preview.jpg?raw=true =750x)
+
+
 ## Environment Configuration
 `env.js` project root
 ```json
