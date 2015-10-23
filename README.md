@@ -1,28 +1,12 @@
 # Connected-Lajeunesse
 
-View github, weather, calendar and home notifications on an Android Tablet. With speech recognition control and twitter sentiment analysis
+Android app powering the mirror in Heri's house - with daily calendar, weather, github, tweets notifications etc.
 
 ![screenshot lajeunesse](https://github.com/heri/Connected-Lajeunesse/blob/master/preview.jpg?raw=true =750x)
 
+Based on [Hannah's mirror project](https://github.com/HannahMitt/HomeMirror), redone with Facebook's React-Native
 
-## Environment Configuration
-`env.js` project root
-```json
-{
-  "forecast": {
-    "access_token": "forecast.io token"
-  },
-  "github": {
-    "access_token": ""
-  },
-  "twitter": {
-    "consumer_key": "",
-    "consumer_token": "",
-    "access_token": "",
-    "access_token_secret": ""
-  }
-}
-```
+![screenshot lajeunesse](https://github.com/HannahMitt/HomeMirror/raw/master/design/IMG_20150825_191621.jpg =750x)
 
 ## Build
 ```

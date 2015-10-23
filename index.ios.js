@@ -25,8 +25,8 @@ var DateView = require('./components/date'),
 
 var MagicMirror = React.createClass({
   render: function() {
-    var calendar_id = 'heri@madmedia.ca',
-    twitterUsers = ['paulg', 'elonmusk', 'eoshd', 'radioopensource', 'levelsio', 'banksy', 'howlarts', 'stromae', 'shl', 'Oatmeal'];
+    var stocks = ['FB', 'TWTR', 'AAPL', 'GOOGL', 'MSFT', 'TSLA'],
+        twitterUsers = ['berniesanders', 'robinpowered', 'elonmusk'];
     return (
       <View style={styles.container}>
         <View style={styles.row}>
@@ -39,19 +39,23 @@ var MagicMirror = React.createClass({
           <WeatherView></WeatherView>
         </View>
         <View style={[styles.row, styles.margin]}>
+          <TwitterView users={twitterUsers}></TwitterView>
+        </View>
+        <View style={[styles.row, styles.margin]}>
           <GithubView></GithubView>
         </View>
         <View style={[styles.row, styles.margin]}>
-          <CalendarView calendar_id={calendar_id}></CalendarView>
+          <CalendarView></CalendarView>
         </View>
-        <View style={[styles.row, styles.margin]}>
-          <TwitterView users={twitterUsers}></TwitterView>
+
+        <View style={styles.stocks}>
+          <StockView style={{width: '100%'}} symbols={stocks}></StockView>
         </View>
+
       </View>
     );
   }
 });
-
 
 var styles = StyleSheet.create({
   container: {

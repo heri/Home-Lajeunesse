@@ -13,24 +13,24 @@ var {
 } = React;
 
 function getGCalendar(calendar_id) {
-  today = (new Date()).toISOString();
-  return fetch('https://www.googleapis.com/calendar/v3/calendars/' + calendar_id +'/events?fields=items(summary,id,location,start)&key=')
+  var date_min = (new Date()).toISOString();
+  return fetch('https://www.googleapis.com/calendar/v3/calendars/' + calendar_id +'/events?fields=items(summary,id,location,start)&timeMin=' + date_min)
   .then(function (response) {
-    return response.body.items;
+    return response.json();
   });
 }
 
 var CalendarView = React.createClass({
   mixins: [TweenState.Mixin],
   getInitialState: function () {
-    return {calendars: [], calendar: 0};
+    return {events: [], event: 0};
   },
   rotate: function () {
-    var next = this.state.calendar + 1;
-    if (next === this.state.calendars.length) {
-      next = 0;
+    var next = this.state.event + 1;
+    if (next === this.state.events.length) {
+      next = 1;
     }
-    this.state.calendar = next;
+    this.state.event = next;
     this.setState(this.state);
     this.fade(1);
   },
@@ -50,24 +50,25 @@ var CalendarView = React.createClass({
     });
   },
   componentDidMount: function () {
-    getGCalendar(this.props.calendar_id).then(function (calendars) {
-      this.setState({calendars: calendars, calendar: 0});
+    getGCalendar(this.props.calendar_id).then(function (events) {
+      this.setState({events: events.items, event: 1});
       this.fade(1);
     }.bind(this));
   },
   render: function () {
-    var calendar = this.state.calendars[this.state.calendar],
+    var event = this.state.events[this.state.event],
         calendarView;
+    if (event && event.start && event.start.dateTime) {
+      var eventDateTime = event.start.dateTime.split("T");
 
-    if (calendar) {
       calendarView = (
-        <View style={[styles.calendar, {opacity: this.getTweeningValue('opacity')}]} key={'calendar' + calendar.id}>
-          <Text style={styles.text}>{calendar.summary}</Text>
-          <Text style={styles.text}>{calendar.start.dateTime}</Text>
+        <View style={[styles.event, {opacity: this.getTweeningValue('opacity')}]} key={'event' + event.id}>
+          <Text style={styles.text}>{event.summary}</Text>
+          <Text style={styles.text}>{eventDateTime[1]} @ {event.location}</Text>
         </View>
       );
     } else {
-      calendarView = (<View></View>);
+      calendarView = (<View><Text style={styles.title}></Text></View>);
     }
     return (
       <View style={styles.container}>

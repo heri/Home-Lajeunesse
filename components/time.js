@@ -10,23 +10,29 @@ var {
 } = React;
 
 var TimeView = React.createClass({
-  getInitialState: function () {
-    return {time: moment()};
+  getInitialState: function() {
+    return {
+      time: moment()
+    };
   },
-  tick: function () {
-    this.setState({time: moment()});
+  tick: function() {
+    this.setState({
+      time: moment()
+    });
   },
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.interval = setInterval(this.tick, 1000);
   },
-  componentWillUnmount: function () {
+  componentWillUnmount: function() {
     clearInterval(this.interval);
   },
-  render: function () {
+  render: function() {
     var time = this.state.time.format('h:mm:ss a');
-    return (
-      <Text style={styles.time}>{time}</Text>
-    );
+    return ( < Text style = {
+      styles.time
+    } > {
+      time
+    } < /Text>);
   }
 });
 
