@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react-native'),
-    Config = require('../env.js'),
     Styles = require('../styles');
 var {
   StyleSheet,
@@ -11,7 +10,7 @@ var {
 } = React;
 
 function fetchWeatherReport () {
-  var requestEndpoint = 'https://api.forecast.io/forecast/' + Config.forecastio.access_token + '/';
+  var requestEndpoint = 'https://api.forecast.io/forecast/be7760964f3011229eb446b6909c6678/';
   requestEndpoint += '45.5017,-73.5673';
   return fetch(requestEndpoint).then(function (response) {
     return response.json();
@@ -62,11 +61,9 @@ var WeatherView = React.createClass({
           <View style={styles.row}>
             {icon}
             <View style={styles.temperature}>
-              <Text style={styles.weather}>{weather.now.temperature.f}</Text>
+              <Text style={styles.weather}>{weather.now.temperature.c}</Text>
               <Text style={styles.superscript}>o</Text>
-              <Text style={styles.weather}>F ({weather.now.temperature.c}</Text>
-              <Text style={styles.superscript}>o</Text>
-              <Text style={styles.weather}>C)</Text>
+              <Text style={styles.weather}>C</Text>
             </View>
           </View>
         </View>

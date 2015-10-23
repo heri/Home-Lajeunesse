@@ -77,12 +77,7 @@ var StockView = React.createClass({
         ));
       }
       return (
-        <View
-          ref="slider"
-          onLayout={function(){}}
-          style={[styles.row, {left: this.getTweeningValue('left')}]}>
-          {elements}
-        </View>
+        <View ref="slider" onLayout={function(){}} style={[styles.row, {left: this.getTweeningValue('left')}]}>{elements}</View>
       );
     } else {
       return (
