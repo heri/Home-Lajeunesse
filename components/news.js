@@ -36,7 +36,7 @@ var NewsView = React.createClass({
   fade: function (fadeDirection) {
     this.tweenState('opacity', {
       easing: TweenState.easingTypes.linear,
-      duration: 1000,
+      duration: 2000,
       endValue: fadeDirection,
       onEnd: function () {
         if (!fadeDirection) {

@@ -35,7 +35,7 @@ var GithubView = React.createClass({
   fade: function (fadeDirection) {
     this.tweenState('opacity', {
       easing: TweenState.easingTypes.linear,
-      duration: 2000,
+      duration: 3000,
       endValue: fadeDirection,
       onEnd: function () {
         if (!fadeDirection) {

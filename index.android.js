@@ -40,13 +40,13 @@ var MagicMirror = React.createClass({
           <WeatherView></WeatherView>
         </View>
         <View style={[styles.row, styles.margin]}>
-          <NewsView></NewsView>
+          <CalendarView calendar_id={calendar_id}></CalendarView>
         </View>
         <View style={[styles.row, styles.margin]}>
           <GithubView></GithubView>
         </View>
         <View style={[styles.row, styles.margin]}>
-          <CalendarView calendar_id={calendar_id}></CalendarView>
+          <NewsView></NewsView>
         </View>
         <View style={[styles.row, styles.margin]}>
           <TwitterView users={twitterUsers}></TwitterView>
