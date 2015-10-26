@@ -14,7 +14,7 @@ var {
 
 function getGCalendar(calendar_id) {
   var date_min = (new Date()).toISOString();
-  return fetch('https://www.googleapis.com/calendar/v3/calendars/' + calendar_id +'/events?fields=items(summary,id,location,start)&timeMin=' + date_min)
+  return fetch('https://www.googleapis.com/calendar/v3/calendars/' + calendar_id +'/events?fields=items(summary,id,location,start)&key==' + date_min)
   .then(function (response) {
     return response.json();
   });
@@ -37,7 +37,7 @@ var CalendarView = React.createClass({
   fade: function (fadeDirection) {
     this.tweenState('opacity', {
       easing: TweenState.easingTypes.linear,
-      duration: 1000,
+      duration: 3000,
       endValue: fadeDirection,
       onEnd: function () {
         if (!fadeDirection) {

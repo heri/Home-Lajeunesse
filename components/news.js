@@ -11,31 +11,32 @@ var {
   Image
 } = React;
 
-function getGithubNotifications() {
-  return fetch('https://api.github.com/notifications?access_token=')
+function getNewsArticles() {
+  var url = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key='
+  return fetch(url)
     .then(function(response) {
       return response.json();
     });
 }
 
-var GithubView = React.createClass({
+var NewsView = React.createClass({
   mixins: [TweenState.Mixin],
   getInitialState: function () {
-    return {notifications: [], notification: 0};
+    return {articles: [], article: 0};
   },
   rotate: function () {
-    var next = this.state.notification + 1;
-    if (next === this.state.notifications.length) {
+    var next = this.state.article + 1;
+    if (next === this.state.articles.length) {
       next = 0;
     }
-    this.state.notification = next;
+    this.state.article = next;
     this.setState(this.state);
     this.fade(1);
   },
   fade: function (fadeDirection) {
     this.tweenState('opacity', {
       easing: TweenState.easingTypes.linear,
-      duration: 2000,
+      duration: 1000,
       endValue: fadeDirection,
       onEnd: function () {
         if (!fadeDirection) {
@@ -49,31 +50,33 @@ var GithubView = React.createClass({
 
   },
   componentDidMount: function () {
-    getGithubNotifications().then(function (notifications) {
-      this.setState({notifications: notifications, notification: 0});
+    getNewsArticles().then(function (articles) {
+      this.setState({articles: articles.results, article: 0});
       this.fade(1);
     }.bind(this));
   },
   render: function () {
-    var notification = this.state.notifications[this.state.notification],
-        notificationView;
-        if (notification) {
-          notificationView = (
-            <View style={[styles.notification, {opacity: this.getTweeningValue('opacity')}]} key={'notification' + notification.id}>
-            <Text style={styles.text}>{notification.repository.name}: {notification.subject.title}</Text>
+    var article = this.state.articles[this.state.article],
+        articleView;
+        if (article) {
+          var articleTime = article.updated_date.split("T")[1].split("-")[0];
+          articleView = (
+            <View style={[styles.article, {opacity: this.getTweeningValue('opacity')}]} key={'article' + article.id}>
+              <Text style={styles.text}>{article.subsection}: {article.title}</Text>
+              <Text style={styles.text}>@{articleTime}</Text>
             </View>
           );
         } else {
-          notificationView = (<View></View>);
+          articleView = (<View></View>);
         }
 
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <Text style={styles.title}>Github</Text>
-          <Image source={require('image!github')} style={styles.image} />
+          <Text style={styles.title}>News</Text>
+          <Image source={require('image!nytimes')} style={styles.image} />
         </View>
-        {notificationView}
+        {articleView}
       </View>
     );
   }
@@ -102,10 +105,10 @@ var styles = StyleSheet.create({
     fontSize: Styles.fontSize.small,
     textAlign: 'right'
   },
-  notification: {
+  article: {
     opacity: 0
   }
 });
 
 
-module.exports = GithubView;
+module.exports = NewsView;
