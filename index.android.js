@@ -21,7 +21,8 @@ var DateView = require('./components/date'),
     StockView = require('./components/stock'),
     TwitterView = require('./components/twitter'),
     GithubView = require('./components/github'),
-    CalendarView = require('./components/calendar');
+    CalendarView = require('./components/calendar'),
+    NewsView = require('./components/news');
 
 var MagicMirror = React.createClass({
   render: function() {
@@ -37,6 +38,9 @@ var MagicMirror = React.createClass({
         </View>
         <View style={[styles.row, styles.margin, {marginTop: -10}]}>
           <WeatherView></WeatherView>
+        </View>
+        <View style={[styles.row, styles.margin]}>
+          <NewsView></NewsView>
         </View>
         <View style={[styles.row, styles.margin]}>
           <GithubView></GithubView>
