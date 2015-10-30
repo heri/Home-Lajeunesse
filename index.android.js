@@ -22,12 +22,13 @@ var DateView = require('./components/date'),
     TwitterView = require('./components/twitter'),
     GithubView = require('./components/github'),
     CalendarView = require('./components/calendar'),
-    NewsView = require('./components/news');
+    NewsView = require('./components/news'),
+    TrelloView = require('./components/trello');
 
 var MagicMirror = React.createClass({
   render: function() {
     var calendar_id = 'heri@madmedia.ca',
-    twitterUsers = ['paulg', 'elonmusk', 'eoshd', 'radioopensource', 'levelsio', 'banksy', 'howlarts', 'stromae', 'shl', 'Oatmeal'];
+    twitterUsers = ['paulg', 'elonmusk', 'radioopensource', 'moonscript', 'banksy', 'howlarts', 'dhh', 'shl', 'Oatmeal', 'lonelysandwich', 'kendyty', 'georgpetschnigg', 'lukew', 'wongfupro', 'macournoyer', 'davidkarp'];
     return (
       <View style={styles.container}>
         <View style={styles.row}>
@@ -44,6 +45,9 @@ var MagicMirror = React.createClass({
         </View>
         <View style={[styles.row, styles.margin]}>
           <GithubView></GithubView>
+        </View>
+        <View style={[styles.row, styles.margin]}>
+          <TrelloView></TrelloView>
         </View>
         <View style={[styles.row, styles.margin]}>
           <NewsView></NewsView>
