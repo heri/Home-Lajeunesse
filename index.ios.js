@@ -21,12 +21,14 @@ var DateView = require('./components/date'),
     StockView = require('./components/stock'),
     TwitterView = require('./components/twitter'),
     GithubView = require('./components/github'),
-    CalendarView = require('./components/calendar');
+    CalendarView = require('./components/calendar'),
+    NewsView = require('./components/news'),
+    TrelloView = require('./components/trello');
 
 var MagicMirror = React.createClass({
   render: function() {
-    var stocks = ['FB', 'TWTR', 'AAPL', 'GOOGL', 'MSFT', 'TSLA'],
-        twitterUsers = ['berniesanders', 'robinpowered', 'elonmusk'];
+    var calendar_id = 'heri@madmedia.ca',
+    twitterUsers = ['paulg', 'elonmusk', 'radioopensource', 'moonscript', 'banksy', 'howlarts', 'dhh', 'shl', 'Oatmeal', 'lonelysandwich', 'kendyty', 'georgpetschnigg', 'lukew', 'wongfupro', 'macournoyer', 'davidkarp'];
     return (
       <View style={styles.container}>
         <View style={styles.row}>
@@ -39,19 +41,20 @@ var MagicMirror = React.createClass({
           <WeatherView></WeatherView>
         </View>
         <View style={[styles.row, styles.margin]}>
-          <TwitterView users={twitterUsers}></TwitterView>
+          <CalendarView calendar_id={calendar_id}></CalendarView>
         </View>
         <View style={[styles.row, styles.margin]}>
           <GithubView></GithubView>
         </View>
         <View style={[styles.row, styles.margin]}>
-          <CalendarView></CalendarView>
+          <TrelloView></TrelloView>
         </View>
-
-        <View style={styles.stocks}>
-          <StockView style={{width: '100%'}} symbols={stocks}></StockView>
+        <View style={[styles.row, styles.margin]}>
+          <NewsView></NewsView>
         </View>
-
+        <View style={[styles.row, styles.margin]}>
+          <TwitterView users={twitterUsers}></TwitterView>
+        </View>
       </View>
     );
   }
